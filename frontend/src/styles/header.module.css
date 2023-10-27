@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+}
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: -webkit-fill-available;
+}
+.box > a {
+  all: unset;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+.box > a:hover {
+  color: var(--primary-color);
+}
