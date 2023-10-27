@@ -5,3 +5,7 @@ package-lock.json
 backend-python/uploads
 backend-python/env
 backend-python/__pycache__
+
+backend/node_modules
+backend/.env
+backend/package-lock.json
