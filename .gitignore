@@ -9,3 +9,11 @@ backend-python/__pycache__
 backend/node_modules
 backend/.env
 backend/package-lock.json
+
+backend-python/backendLLM/__pycache__
+env
+backend-python/env
+backend-python/backendLLM/info_db
+backend-python/backend-python
+backend-python/backendLLM/cache
+backend-python/backendLLM/db

@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import classes from "@/styles/header.module.css";
 import Link from "next/link";
+import { useNotification } from "@/hook/useNotification";
 
 const pageNavigators = [
   { title: "Features", path: "/features" },
@@ -10,6 +12,7 @@ const pageNavigators = [
 ];
 
 const Header = () => {
+  const { NotificationHandler } = useNotification();
   return (
     <header className={classes.header}>
       <div className={classes["logo-container"]}>

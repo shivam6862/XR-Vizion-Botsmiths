@@ -10,14 +10,12 @@ const NotificationContext = React.createContext({
 });
 
 export const NotificationContextProvider = (props) => {
-  const [typeMessage, setTypeMessage] = useState([
-    { message: "Web page loaded successfully!!", id: v4(), type: "#3498db" },
-  ]);
+  const [typeMessage, setTypeMessage] = useState([]);
 
-  const messageHandler = (message, type) => {
+  const messageHandler = (title, message, type, logo) => {
     setTypeMessage((prev) => [
       ...prev,
-      { message: message, id: v4(), type: type },
+      { title: title, message: message, id: v4(), type: type, logo: logo },
     ]);
   };
   const onDeleteHandler = (id) => {
