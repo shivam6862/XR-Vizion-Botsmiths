@@ -7,9 +7,12 @@ import classes from "@/styles/chat.module.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
   const [showChats, setShowChats] = useState(false);
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <div style={{ height: "100vh" }}>
       <Head>

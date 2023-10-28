@@ -3,6 +3,10 @@ import React from "react";
 import classes from "@/styles/header.module.css";
 import Link from "next/link";
 import { useNotification } from "@/hook/useNotification";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import logo from "../../public/logo.jpg";
 
 const pageNavigators = [
   { title: "Features", path: "/features" },
@@ -11,12 +15,16 @@ const pageNavigators = [
   { title: "Affiliates", path: "/affiliates" },
 ];
 
-const Header = () => {
+const Header = (session) => {
   const { NotificationHandler } = useNotification();
+  const { data } = useSession();
+  console.log(data);
+  console.log(session);
   return (
     <header className={classes.header}>
       <Link href={"/"}>
         <div className={classes["logo-container"]}>
+          <Image src={logo} alt="logo" />
           <h1
             onClick={() => {
               NotificationHandler(
@@ -40,8 +48,14 @@ const Header = () => {
         </ul>
       </nav>
       <nav className={classes["auth-links"]}>
-        <Link href={"/account/login"}>Sign In</Link>
-        <Link href={"/account/register"}>Sign Up</Link>
+        {session.session !== null ? (
+          <button onClick={() => signOut()}>Sign Out</button>
+        ) : (
+          <>
+            <Link href={"/account/login"}>Sign In</Link>
+            <Link href={"/account/register"}>Sign Up</Link>
+          </>
+        )}
       </nav>
     </header>
   );

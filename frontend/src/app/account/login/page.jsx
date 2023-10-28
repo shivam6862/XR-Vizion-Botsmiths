@@ -4,13 +4,42 @@ import classes from "@/styles/account/login.module.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import Link from "next/link";
 import AccountImage from "@/components/notification/AccountImage";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [values, setValues] = useState({ email: "", password: "", error: "" });
   const [isTextPassword, setIsTextPassword] = useState(true);
+  const { email, password, error } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
+  };
+
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (res.error) {
+        setValues((prev) => ({
+          ...prev,
+          error: "Invalid Credentials",
+        }));
+        return;
+      }
+
+      router.push("/chat");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -60,7 +89,9 @@ const Login = () => {
             </div>
           </div>
           <div className={classes.right_last}>
-            <div className={classes.button}>Log In</div>
+            <div className={classes.button} onClick={handleSubmit}>
+              Log In
+            </div>
             <div className={classes.privacy_policy}>
               By creating an account, I accept the Terms & Conditions & Privacy
               Policy
