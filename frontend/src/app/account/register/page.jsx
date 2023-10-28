@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import classes from "@/styles/account/register.module.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import AccountImage from "@/components/notification/AccountImage";
+<<<<<<< HEAD
 import { useRouter } from "next/navigation";
+=======
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+>>>>>>> f9ea4d5780d9652cdd942c07baa70e8feb1fa5cc
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -70,58 +75,61 @@ const Register = () => {
   };
   console.log(error);
   return (
-    <div className={classes.container}>
-      <div className={classes.box}>
-        <div className={classes.left}>
-          <AccountImage />
-        </div>
-        <div className={classes.right}>
-          <div className={classes.right_container}>
-            <h1>Create Your Free Account</h1>
-            <div className={classes.input_box}>
-              <p>full name</p>
-              <input
-                type="text"
-                name="text"
-                id="name"
-                placeholder="Enter your full name"
-                value={values.name}
-                onChange={handleChange("name")}
-              />
-            </div>
-            <div className={classes.input_box}>
-              <p>email</p>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter your Email"
-                value={values.email}
-                onChange={handleChange("email")}
-              />
-            </div>
-            <div className={classes.input_box}>
-              <p>password</p>
-              <div className={classes.password}>
+    <>
+      <Header />
+      <div className={classes.container}>
+        <div className={classes.box}>
+          <div className={classes.left}>
+            <AccountImage />
+          </div>
+          <div className={classes.right}>
+            <div className={classes.right_container}>
+              <h1>Create Your Free Account</h1>
+              <div className={classes.input_box}>
+                <p>full name</p>
                 <input
-                  type={!isTextPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  placeholder="Enter your Password!"
-                  value={values.password}
-                  onChange={handleChange("password")}
+                  type="text"
+                  name="text"
+                  id="name"
+                  placeholder="Enter your full name"
+                  value={values.name}
+                  onChange={handleChange("name")}
                 />
-                <div
-                  className={classes.openclosed}
-                  onClick={() => {
-                    setIsTextPassword((prev) => !prev);
-                  }}
-                >
-                  {isTextPassword ? (
-                    <AiOutlineEyeInvisible />
-                  ) : (
-                    <AiOutlineEye />
-                  )}
+              </div>
+              <div className={classes.input_box}>
+                <p>email</p>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your Email"
+                  value={values.email}
+                  onChange={handleChange("email")}
+                />
+              </div>
+              <div className={classes.input_box}>
+                <p>password</p>
+                <div className={classes.password}>
+                  <input
+                    type={!isTextPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="Enter your Password!"
+                    value={values.password}
+                    onChange={handleChange("password")}
+                  />
+                  <div
+                    className={classes.openclosed}
+                    onClick={() => {
+                      setIsTextPassword((prev) => !prev);
+                    }}
+                  >
+                    {isTextPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -137,7 +145,8 @@ const Register = () => {
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

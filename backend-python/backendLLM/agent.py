@@ -10,18 +10,25 @@ from langchain.callbacks.manager import (
 from langchain.schema import Document
 from langchain.utilities.google_search import GoogleSearchAPIWrapper
 from backendLLM.chains import *
+from backendLLM.db_creation import *
 from langchain.vectorstores import chroma
 from queue import Queue 
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import LLMChainFilter
+import json
+#_______________________________________________________________________________________________________________________
+db_path = 'backendLLM/info_db'
+db = chroma.Chroma(embedding_function=embedder , persist_directory=db_path)
 
-
-db_path = 'backend-python/backendLLM/db'
-db = chroma.Chroma(embedding_function=Embedding() , persist_directory=db_path)
+# def run(self , query):
+filter_ = LLMChainFilter.from_llm(llm)
+retriever = db.as_retriever(search_kwargs={"k": 5, 'fetch_k': 10}, return_source_documents=True)
+compression_retriever = ContextualCompressionRetriever(base_compressor= filter_, base_retriever=retriever)
+  
 #_______________________________________________________________________________________________________________________
 class VectorDB(BaseTool):
     
-    # return_direct = True
-    # handle_tool_error = True
-    def __init__(self,name, descr):
+    def __init__(self ,name, descr):
       super(VectorDB, self).__init__(name=name, description=descr, return_direct=True, handle_tool_error=True)
 
     def _run(
@@ -30,31 +37,34 @@ class VectorDB(BaseTool):
       run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
       """Use the tool."""
-      results:List[Document] = db.run(query)
+      results:List[Document] =  compression_retriever.get_relevant_documents(query)
       if 'summary' in query.lower() or 'summarize' in query.lower():
         return self.__formatting__(results , to_summarize=True)
 
-      return self.__formatting__(results)
+      result =  self.__formatting__(results)
+      return result
   
     def __formatting__(self, docs:List[Document] , to_summarize = False)->dict:
-      result = {}
       text = ''
+      result = {}
       meta_list = []
       for doc in docs:
-        text += doc.page_content+'\n'
+
+        text += doc.page_content +'\n'
         meta_str = ''
         for key in doc.metadata:
           if not key == 'summary':
-            meta_str += key + ' : ' + doc.metadata[key] + '\t\t'
+            meta_str += key + ' : ' + (str)(doc.metadata[key]) + '\t\t'
             meta_list.append(meta_str)
-      
       metadata = '\n'.join(meta_list)
       if to_summarize:
         result['text'] = summary_chain.run(text)
       else :
-        result['text'] = chat_format_chain(text)
+        result['text'] = chat_format_chain.run(text)
       result['metadata'] = metadata
-      return result
+      json_string = json.dumps(result)
+
+      return json_string
 
 
 search = GoogleSearchAPIWrapper()
@@ -62,12 +72,13 @@ search = GoogleSearchAPIWrapper()
 #_______________________________________________________________________________________________________________________
 
 class PersonalAgent:
-  def __init__(self, history  , cache_path = 'backendLLM/cache' , enable_cache = False):
+  def __init__(self, history, cache_path = 'backendLLM/cache' , enable_cache = False):
 
     self.history = history
     if history is None :
-        self.history = {'title' : '' , 'chat_summary' : ''}
-    self.prefix = """Have a conversation with a human, answering the following questions as best you can. You have access to the following tools:"""
+        self.history = {'title' : '' , 'chat_summary' : 'new chat begins'}
+    self.prefix = """Have a conversation with a human, answering the following questions as best you can. 
+                      Do not make your own facts when you fail to get answers from provided tools.You have access to the following tools:"""
     self.suffix = """Begin!
 
     Chat History:
@@ -82,17 +93,15 @@ class PersonalAgent:
 
     # tools
     self.task_tools = [
-        VectorDB(name = "User Database", 
-                descr = '''
-                    Use this tool to fetch answer to user queries from database. Prioritize this over web search.
-              '''),
-        Tool(
-        name="Google Search",  
-        description="Use when the user wants to search something on web instead of relying on database.", 
-        func=search.run,  
-        return_direct=False, 
-        handle_tool_error=True,  
-        ),
+          VectorDB(
+            name = "User Database", 
+            descr = '''Use this tool to fetch answer to user queries from database. Prioritize this over web search.'''),
+          Tool(
+            name="Google Search",  
+            description="This tool is helpful when the user mentions to search the web or for finding very recent information.", 
+            func=search.run,  
+            handle_tool_error=True,  
+          ),
 ]
 
     self.task_prompt = ZeroShotAgent.create_prompt(
@@ -111,20 +120,19 @@ class PersonalAgent:
     # agent
     self.agent = ZeroShotAgent(llm_chain=self.llm_chain, tools=self.task_tools, verbose=True)
     self.agent_chain = AgentExecutor.from_agent_and_tools(
-        agent=self.agent, tools=self.task_tools, 
+        agent=self.agent, tools=self.task_tools,
         verbose=True, memory=self.memory, handle_parsing_errors=True,
     )
 
     # caching
     self.enable_cache = enable_cache  
-    self.cache = chroma.Chroma(embedding_function=Embedding() , persist_directory=cache_path)
+    self.cache = chroma.Chroma(embedding_function=embedder , persist_directory=cache_path)
     self.cache_size = 0
     self.prev_queries = Queue(maxsize = 3) 
-    self.cache.add_documents([Document(page_content='' , metadata={'summary':''})], id=[self.cache_size])
+    self.cache.add_documents([Document(page_content='Have a good day' , metadata={'summary':'Be grateful to GOD'})], id=[self.cache_size])
 
   def run(self, query):
     
-       
     if self.enable_cache:
       if self.prev_queries.full():
         self.prev_queries.get()
@@ -133,15 +141,16 @@ class PersonalAgent:
       self.query_window = '\n'.join(iter(self.prev_queries.queue))
       cache, score = self.cache.similarity_search_with_relevance_scores(query = self.query_window , k = 2).sort(key=lambda x: x[1])[0]
       if score<0.3:
-          return cache.page_content
+        return cache.page_content
     try:
-        ans =  self.agent_chain.run(query)
-        if self.enable_cache:
-          self.cache_size += 1
-          self.cache.add_documents([Document(page_content=ans , metadata={'window' :self.query_window})], id=[self.cache_size])
-        return ans
+      ans =  self.agent_chain.run(query)
+    
+      if self.enable_cache:
+        self.cache_size += 1
+        self.cache.add_documents([Document(page_content=ans , metadata={'window' :self.query_window})], id=[self.cache_size])
+      return ans
     except Exception as e:
-        print('Jai Shree Ram!! Inside agent')
+      print('Exception: \n\n' ,e)
     return "I did not get that. Please try again."
 
   def get_chat_summary(self):

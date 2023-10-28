@@ -25,7 +25,7 @@ def uploadDocument():
         # data = request.form.get('data')
         # conversationId = request.form.get('conversationId')
         # history = request.form.get('history')
-        data = "what is the weather today?"
+        data = "what is the value of rupee in dollar?"
         conversationId = "fdbfuidi-bfkhbdekjb-efjkbefjkb"
         history = None
 

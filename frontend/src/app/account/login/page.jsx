@@ -6,6 +6,8 @@ import Link from "next/link";
 import AccountImage from "@/components/notification/AccountImage";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Login = () => {
   const [values, setValues] = useState({ email: "", password: "", error: "" });
@@ -43,47 +45,50 @@ const Login = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <div className={classes.box}>
-        <div className={classes.left}>
-          <AccountImage />
-        </div>
-        <div className={classes.right}>
-          <div className={classes.right_container}>
-            <h1>Log in to your account</h1>
-            <div className={classes.input_box}>
-              <p>email</p>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter your Email"
-                value={values.email}
-                onChange={handleChange("email")}
-              />
-            </div>
-            <div className={classes.input_box}>
-              <p>password</p>
-              <div className={classes.password}>
+    <>
+      <Header />
+      <div className={classes.container}>
+        <div className={classes.box}>
+          <div className={classes.left}>
+            <AccountImage />
+          </div>
+          <div className={classes.right}>
+            <div className={classes.right_container}>
+              <h1>Log in to your account</h1>
+              <div className={classes.input_box}>
+                <p>email</p>
                 <input
-                  type={!isTextPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  placeholder="Enter your Password!"
-                  value={values.password}
-                  onChange={handleChange("password")}
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your Email"
+                  value={values.email}
+                  onChange={handleChange("email")}
                 />
-                <div
-                  className={classes.openclosed}
-                  onClick={() => {
-                    setIsTextPassword((prev) => !prev);
-                  }}
-                >
-                  {isTextPassword ? (
-                    <AiOutlineEyeInvisible />
-                  ) : (
-                    <AiOutlineEye />
-                  )}
+              </div>
+              <div className={classes.input_box}>
+                <p>password</p>
+                <div className={classes.password}>
+                  <input
+                    type={!isTextPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="Enter your Password!"
+                    value={values.password}
+                    onChange={handleChange("password")}
+                  />
+                  <div
+                    className={classes.openclosed}
+                    onClick={() => {
+                      setIsTextPassword((prev) => !prev);
+                    }}
+                  >
+                    {isTextPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,7 +107,8 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
