@@ -4,7 +4,6 @@ import classes from "@/styles/header.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Backdrop from "@/components/Backdrop";
-import { useCookies } from "@/hook/useCookies";
 import ConfirmLogout from "@/components/ConfirmLogout";
 import { useNotification } from "@/hook/useNotification";
 import { signOut } from "next-auth/react";
@@ -19,11 +18,10 @@ const pageNavigators = [
   { title: "Contact", path: "/contact-us" },
 ];
 
-const Header = (session) => {
+const Header = () => {
   const { NotificationHandler } = useNotification();
   const { data } = useSession();
   console.log(data);
-  console.log(session);
   const router = useRouter();
 
   const [isLogoutHandler, setIsLogOutHandler] = useState(false);
@@ -76,7 +74,7 @@ const Header = (session) => {
         </ul>
       </nav>
       <nav className={classes["auth-links"]}>
-        {session.session !== null ? (
+        {data !== null ? (
           <button
             onClick={() => {
               logOutHandler();
