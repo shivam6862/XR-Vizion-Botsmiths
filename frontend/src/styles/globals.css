@@ -30,6 +30,7 @@ a {
   --stock: #2a2b3a;
 
   /* font size */
+  --ft-300: 12px;
   --ft-350: 14px;
   --ft-400: 16px;
   --ft-450: 18px;
@@ -37,5 +38,14 @@ a {
   --ft-600: 24px;
   --ft-650: 26px;
   --ft-700: 28px;
+  --ft-800: 40px;
   --ft-900: 54px;
+
+  --background-color-account: linear-gradient(
+    126deg,
+    #010314 4.79%,
+    #2a2b3a 54.4%
+  );
+  --border-buttom-color: #4467ff;
+  --box-shadow-color: #74f;
 }

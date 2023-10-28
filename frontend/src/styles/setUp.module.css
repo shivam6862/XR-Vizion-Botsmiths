@@ -2,20 +2,12 @@
   margin: 4rem var(--b-pad);
   padding: 4rem 3rem;
   border-radius: 50px;
-  border-top: 2px solid #664dff;
-  background: radial-gradient(
-    217.23% 100.08% at 50% 18.33%,
-    rgba(0, 0, 0, 0) 21.67%,
-    #63e 69.34%,
-    #fff 100%
-  );
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2rem;
 }
-
 .container > h1 {
   font-size: var(--ft-900);
   font-weight: 700;
@@ -28,10 +20,11 @@
   color: var(--Paragraph, #77798f);
   font-weight: 400;
   text-align: center;
+  max-width: 600px;
 }
 .links-container {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
 .links-container > a {
   border-radius: 40px;
