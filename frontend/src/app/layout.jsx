@@ -17,9 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NotificationContextProvider>
-          <Header />
           {children}
-          <Footer />
           <Notifications />
         </NotificationContextProvider>
       </body>

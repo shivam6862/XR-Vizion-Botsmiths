@@ -1,0 +1,70 @@
+.user-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem;
+  gap: 1.5rem;
+  background: var(--dark-2, #011c3e);
+}
+.logo-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.logo-container > h1 {
+  color: var(--white-color);
+  font-size: var(--ft-700);
+  font-weight: 500;
+}
+.logo-container span {
+  color: #0f82ff;
+}
+.logo-container > img {
+  border-radius: 50%;
+}
+.user-details {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+  font-size: var(--ft-500);
+  font-weight: 500;
+}
+.user-details > img {
+  border-radius: 50%;
+}
+.chats-btn {
+  border: none;
+  border-radius: 0px 40px 40px 20px;
+  background: #0f82ff;
+  box-shadow: 0px 5px 15px 0px #004692;
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+
+  gap: 1rem;
+}
+.list > li {
+  color: #fff;
+  font-size: var(--ft-400);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+@media (width < 1200px) {
+  .user-container {
+    display: none;
+  }
+}
