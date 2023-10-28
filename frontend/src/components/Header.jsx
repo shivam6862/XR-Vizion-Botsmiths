@@ -1,8 +1,11 @@
+"use client";
 import React from "react";
 import classes from "@/styles/header.module.css";
 import Link from "next/link";
+import { useNotification } from "@/hook/useNotification";
 
 const Header = () => {
+  const { NotificationHandler } = useNotification();
   return (
     <div className={classes.container}>
       <div className={classes.box}>
@@ -13,6 +16,17 @@ const Header = () => {
         <Link href={"/account/reset/password/passwordChange"}>
           passwordChange
         </Link>
+        <button
+          onClick={() => {
+            NotificationHandler(
+              "XR Vizion Botsmiths",
+              "Web page loaded successfully!!",
+              "Success"
+            );
+          }}
+        >
+          click me
+        </button>
       </div>
     </div>
   );
