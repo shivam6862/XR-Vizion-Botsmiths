@@ -1,6 +1,6 @@
 import "../styles/globals.css";
-import { Oxanium } from "next/font/google";
-const oxanium = Oxanium({ subsets: ["latin"] });
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { NotificationContextProvider } from "@/store/notification/Notification-context";
@@ -15,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={oxanium.className}>
+      <body className={inter.className}>
         <NotificationContextProvider>
           <Header />
           {children}
