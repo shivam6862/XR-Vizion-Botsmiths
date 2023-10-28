@@ -1,0 +1,104 @@
+.header {
+  padding: 1rem var(--b-pad);
+  background: #001835;
+  cursor: pointer;
+  display: none;
+}
+.main {
+  display: flex;
+  height: 100vh;
+}
+.chats-container {
+  flex: 6;
+  background: var(--dark-2, #011c3e);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: scroll;
+}
+
+.bottom {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #011c3e;
+}
+.input-field-container {
+  margin: 2rem 2rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  background: #09274d;
+}
+.input-field-container > textarea {
+  width: 100%;
+  padding: 0.3rem 1rem;
+  background: transparent;
+  border: none;
+  color: #c9c9c9;
+  resize: none;
+  margin: 0;
+  line-height: 158.5%;
+  max-height: 200px;
+  margin-bottom: 0.5rem;
+}
+.input-field-container > textarea:focus {
+  border: none;
+  outline: none;
+}
+.input-field-container > textarea::placeholder {
+  color: #c9c9c9;
+}
+
+/* Chat Item */
+.left {
+  padding: 1.5rem 4rem;
+  display: flex;
+  gap: 1rem;
+}
+.avatar {
+}
+.chat-left {
+  color: #c9c9c9;
+  line-height: 158.5%;
+}
+
+.right {
+  background-color: #09274d;
+  padding: 1.5rem 4rem;
+  color: #c4c4c4;
+  display: flex;
+  gap: 1rem;
+}
+.chat-right {
+  line-height: 158.5%;
+}
+
+@media (width < 850px) {
+  .header {
+    display: flex;
+  }
+  .chats-heading-container {
+    position: absolute;
+    top: 0;
+    left: -400px;
+    bottom: 0;
+    z-index: 100;
+    transition: all 0.5s;
+  }
+  .chats-heading-container.active {
+    display: block;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+  .main {
+    flex-direction: column;
+  }
+}

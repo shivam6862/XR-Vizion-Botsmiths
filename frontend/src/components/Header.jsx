@@ -32,8 +32,8 @@ const Header = () => {
       </Link>
       <nav className={classes["page-links-container"]}>
         <ul>
-          {pageNavigators.map((nav) => (
-            <li>
+          {pageNavigators.map((nav, i) => (
+            <li key={i}>
               <Link href={`${nav.path}`}>{nav.title}</Link>
             </li>
           ))}
