@@ -15,21 +15,33 @@ const Header = () => {
   const { NotificationHandler } = useNotification();
   return (
     <header className={classes.header}>
-      <div className={classes["logo-container"]}>
-        <h1>Logo</h1>
-      </div>
+      <Link href={"/"}>
+        <div className={classes["logo-container"]}>
+          <h1
+            onClick={() => {
+              NotificationHandler(
+                "Botsmiths",
+                "Thank for joining us, XR-Vizion Botsmiths!",
+                "Info"
+              );
+            }}
+          >
+            Botsmiths
+          </h1>
+        </div>
+      </Link>
       <nav className={classes["page-links-container"]}>
         <ul>
           {pageNavigators.map((nav) => (
             <li>
-              <Link href={`/${nav.path}`}>{nav.title}</Link>
+              <Link href={`${nav.path}`}>{nav.title}</Link>
             </li>
           ))}
         </ul>
       </nav>
       <nav className={classes["auth-links"]}>
-        <Link href={"/sign-in"}>Sign In</Link>
-        <Link href={"/sign-up"}>Sign Up</Link>
+        <Link href={"/account/login"}>Sign In</Link>
+        <Link href={"/account/register"}>Sign Up</Link>
       </nav>
     </header>
   );

@@ -9,7 +9,7 @@ const AccountImage = () => {
         <div className={classes.left_container_bg1}></div>
         <div className={classes.left_container_bg2}></div>
         <div className={classes.left_container_bg3}></div>
-        <Image src={"/account.webp"} width={500} height={700} alt="account" />
+        <Image src={"/account.png"} width={500} height={700} alt="account" />
       </div>
     </div>
   );

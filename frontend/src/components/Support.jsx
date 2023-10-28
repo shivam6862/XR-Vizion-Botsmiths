@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "@/styles/support.module.css";
 import Image from "next/image";
-import playIcon from "../../public/play.svg";
+import { BiPlayCircle } from "react-icons/bi";
+
 import Link from "next/link";
 
 const Support = () => {
@@ -15,7 +16,9 @@ const Support = () => {
       <div className={styles["links-container"]}>
         <Link href="/sign-up">Get Started For Free</Link>
         <Link href="/">
-          <Image src={playIcon} alt="play icon" />
+          <div className={styles.play}>
+            <BiPlayCircle />
+          </div>
           Watch Video
         </Link>
       </div>
