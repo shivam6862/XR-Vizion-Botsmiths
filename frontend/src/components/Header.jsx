@@ -2,19 +2,33 @@ import React from "react";
 import classes from "@/styles/header.module.css";
 import Link from "next/link";
 
+const pageNavigators = [
+  { title: "Features", path: "/features" },
+  { title: "Pricing", path: "/pricing" },
+  { title: "Contact", path: "/contact-us" },
+  { title: "Affiliates", path: "/affiliates" },
+];
+
 const Header = () => {
   return (
-    <div className={classes.container}>
-      <div className={classes.box}>
-        <Link href={"/"}>home</Link>
-        <Link href={"/account/login"}>login</Link>
-        <Link href={"/account/register"}>register</Link>
-        <Link href={"/account/reset/password"}>password</Link>
-        <Link href={"/account/reset/password/passwordChange"}>
-          passwordChange
-        </Link>
+    <header className={classes.header}>
+      <div className={classes["logo-container"]}>
+        <h1>Logo</h1>
       </div>
-    </div>
+      <nav className={classes["page-links-container"]}>
+        <ul>
+          {pageNavigators.map((nav) => (
+            <li>
+              <Link href={`/${nav.path}`}>{nav.title}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <nav className={classes["auth-links"]}>
+        <Link href={"/sign-in"}>Sign In</Link>
+        <Link href={"/sign-up"}>Sign Up</Link>
+      </nav>
+    </header>
   );
 };
 
