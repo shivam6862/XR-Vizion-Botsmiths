@@ -19,18 +19,24 @@ def home():
     return jsonify(response_obj), 200, response_headers
 
 
-@app.route('/uploadDocument', methods=['POST'])
+@app.route('/uploadDocument', methods=['GET'])
 def uploadDocument():
     try:
-        data = request.form.get('data')
+        # data = request.form.get('data')
+        # conversationId = request.form.get('conversationId')
+        # history = request.form.get('history')
+        data = "what is the weather today?"
+        conversationId = "fdbfuidi-bfkhbdekjb-efjkbefjkb"
+        history = None
 
         if not data:
             return jsonify({"error": "Missing data or file"}), 400
-
-        predictions = models.model(data=data)
+        
+        predictions,history = models.model(data=data  ,conversationId=conversationId, history=history)
 
         response_obj = [{
             "predictions": predictions,
+            "history":history,
             "message": "Predictions saved successfully."
         }]
 
