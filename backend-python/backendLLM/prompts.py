@@ -20,19 +20,7 @@ summary_prompt = PromptTemplate(
 
 #_______________________________________________________________________________________________________________________
 
-chat_format_template = '''
-Organise the provided text for enhancing user readability. Try put information in bullet points, under headings, etc.
-Also, try to us bold and italics to highlight important keywords and headings, use proper indentation for proper displaying of text to user.
 
-Query: 
-
-{query}
-'''
-
-chat_format_prompt = PromptTemplate(
-    input_variables=["query"],
-    template=chat_format_template,
-)
 #_______________________________________________________________________________________________________________________
 
 title_template= ''''

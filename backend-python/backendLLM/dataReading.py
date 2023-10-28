@@ -2,7 +2,7 @@ from langchain.document_loaders import PyPDFLoader, TextLoader, WebBaseLoader
 from langchain.schema import Document
 from typing import List
 from langchain.text_splitter import SpacyTextSplitter, RecursiveCharacterTextSplitter
-from chains import *
+from backendLLM.chains import *
 
 
 class DataReading:
@@ -40,11 +40,11 @@ class DataSplitting:
   def __init__(self , docs: List[Document], enrich_metadata:bool = False):
     self.docs = docs
     self.pages:List[Document] = []
-    self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=16, length_function=len,)
+    self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50, length_function=len,)
     self.enrich_metadata = enrich_metadata
     
   def __get_metadata__(self, text)->dict:
-    return summary_chain.run(text)
+    return title_chain.run(text) , summary_chain.run(text)
   
   def split(self):
     for pages in self.docs:
@@ -54,9 +54,10 @@ class DataSplitting:
 
         for text in texts:
           if self.enrich_metadata:
-            summary = self.__get_metadata__(text) 
+            title, summary = self.__get_metadata__(text) 
 
             meta['summary'] = summary
+            meta['title'] = title
           self.pages.append(Document(page_content=text , metadata=meta))
     return self.pages
   
