@@ -3,12 +3,9 @@ import React, { useState } from "react";
 import classes from "@/styles/account/register.module.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import AccountImage from "@/components/notification/AccountImage";
-<<<<<<< HEAD
 import { useRouter } from "next/navigation";
-=======
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
->>>>>>> f9ea4d5780d9652cdd942c07baa70e8feb1fa5cc
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -133,14 +130,14 @@ const Register = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className={classes.right_last}>
-            <div className={classes.button} onClick={handleSubmit}>
-              Create Accounts
-            </div>
-            <div className={classes.privacy_policy}>
-              By creating an account, I accept the Terms & Conditions & Privacy
-              Policy
+            <div className={classes.right_last}>
+              <div className={classes.button} onClick={handleSubmit}>
+                Create Accounts
+              </div>
+              <div className={classes.privacy_policy}>
+                By creating an account, I accept the Terms & Conditions &
+                Privacy Policy
+              </div>
             </div>
           </div>
         </div>

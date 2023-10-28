@@ -92,17 +92,18 @@ const Login = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className={classes.right_last}>
-            <div className={classes.button} onClick={handleSubmit}>
-              Log In
-            </div>
-            <div className={classes.privacy_policy}>
-              By creating an account, I accept the Terms & Conditions & Privacy
-              Policy
-            </div>
-            <div className={classes.forgotPassord}>
-              <Link href={"/account/reset/password"}>Forgot Passord</Link>
+
+            <div className={classes.right_last}>
+              <div className={classes.button} onClick={handleSubmit}>
+                Log In
+              </div>
+              <div className={classes.privacy_policy}>
+                By creating an account, I accept the Terms & Conditions &
+                Privacy Policy
+              </div>
+              <div className={classes.forgotPassord}>
+                <Link href={"/account/reset/password"}>Forgot Passord</Link>
+              </div>
             </div>
           </div>
         </div>

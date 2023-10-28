@@ -27,7 +27,7 @@ const ContactLogo = ({ size, rotate, gapSize }) => {
         style={rotate == 1 ? { flexDirection: "column" } : { gap: gapSize }}
       >
         {contact_arr.map((item, index) => (
-          <Link href={URL[index]} target="_blank">
+          <Link href={URL[index]} key={index} target="_blank">
             {LOGOS[index]}
           </Link>
         ))}
