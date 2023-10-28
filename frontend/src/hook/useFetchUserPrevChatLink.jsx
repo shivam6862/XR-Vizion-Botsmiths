@@ -1,12 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import AuthenticationContext from "../store/authentication/Authentication-context";
 import { useNotification } from "./useNotification";
 
 export const useFetchUserPrevChatLink = (defaultValue) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(defaultValue);
-  const authenticationContextCtx = useContext(AuthenticationContext);
   const { fetchPersonalDetails } = useLocalStorage();
   const user = fetchPersonalDetails();
   const { NotificationHandler } = useNotification();
@@ -44,7 +42,7 @@ export const useFetchUserPrevChatLink = (defaultValue) => {
       }
     };
     loadResources();
-  }, [authenticationContextCtx.details.phone]);
+  }, []);
 
   return { isLoading, data, setData };
 };

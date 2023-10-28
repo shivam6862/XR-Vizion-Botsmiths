@@ -3,10 +3,10 @@ import classes from "@/styles/user.module.css";
 import Image from "next/image";
 import logo from "../../public/logo.jpg";
 import userImage from "../../public/user.png";
-import chatIcon from "../../public/chat-icon.svg";
-import groupIcon from "../../public/groups.svg";
-import contactsIcon from "../../public/contacts.svg";
-import settingsIcon from "../../public/settings.svg";
+import { BsFillChatRightDotsFill } from "react-icons/bs";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { RiContactsBook2Fill } from "react-icons/ri";
+import { AiOutlineSetting } from "react-icons/ai";
 
 const User = () => {
   return (
@@ -23,17 +23,17 @@ const User = () => {
         Aruul lin
       </div>
       <button className={classes["chats-btn"]}>
-        <Image src={chatIcon} alt="chat" /> Chats
+        <BsFillChatRightDotsFill /> Chats
       </button>
       <ul className={classes.list}>
         <li>
-          <Image src={groupIcon} alt="group" /> Groups
+          <FaPeopleGroup /> Groups
         </li>
         <li>
-          <Image src={contactsIcon} alt="contacts" /> Contacts
+          <RiContactsBook2Fill /> Contacts
         </li>
         <li>
-          <Image src={settingsIcon} alt="settings" /> Settings
+          <AiOutlineSetting /> Settings
         </li>
       </ul>
     </div>
