@@ -72,7 +72,7 @@
   font-weight: bold;
   color: var(--white-color);
 }
-.bottom_footer_left > button {
+.bottom_footer_left > a {
   all: unset;
   padding: 0.2rem 0.75rem;
   border: 1px solid var(--white-color);

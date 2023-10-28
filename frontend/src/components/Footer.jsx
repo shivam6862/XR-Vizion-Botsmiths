@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import classes from "@/styles/footer.module.css";
 import ContactLogo from "@/components/ContactLogo";
 
@@ -46,7 +47,7 @@ const Footer = () => {
         <div className={classes.bottom_footer}>
           <div className={classes.bottom_footer_left}>
             <p>Start your free trail</p>
-            <button>Sign up free</button>
+            <Link href={"/account/register"}>Sign up free</Link>
           </div>
           <div className={classes.bottom_footer_right}>
             <ContactLogo size={25} rotate={0} />

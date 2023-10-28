@@ -1,5 +1,7 @@
 import React from "react";
-import Image from "next/image";
+import { AiOutlineInstagram, AiOutlineLinkedin } from "react-icons/ai";
+import { FaFacebook } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 import Link from "next/link";
 import classes from "@/styles/contactLogo.module.css";
 
@@ -9,6 +11,12 @@ const ContactLogo = ({ size, rotate, gapSize }) => {
     "https://www.instagram.com/",
     "https://twitter.com/",
     "https://www.facebook.com/",
+  ];
+  const LOGOS = [
+    <AiOutlineLinkedin />,
+    <AiOutlineInstagram />,
+    <FaSquareXTwitter />,
+    <FaFacebook />,
   ];
   const contact_arr = ["linkedin", "instagram", "twitter", "facebook"];
 
@@ -20,7 +28,7 @@ const ContactLogo = ({ size, rotate, gapSize }) => {
       >
         {contact_arr.map((item, index) => (
           <Link href={URL[index]} target="_blank">
-            {item}
+            {LOGOS[index]}
           </Link>
         ))}
       </div>

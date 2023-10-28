@@ -14,7 +14,7 @@
 }
 .left_container_bg1 {
   border-radius: 59% 25% 25% 72% / 59% 22% 60% 25%;
-  background: linear-gradient(126deg, #f9ed32 41.79%, #d9bd32 74.4%);
+  background: linear-gradient(126deg, #010314 41.79%, #2a2b3a 74.4%);
   position: absolute;
   top: -2rem;
   left: -2rem;
@@ -24,7 +24,7 @@
 }
 .left_container_bg2 {
   border-radius: 59% 25% 25% 22% / 59% 22% 60% 25%;
-  background: linear-gradient(126deg, #f9ed32 14.79%, #d9bd32 5.4%);
+  background: linear-gradient(126deg, #010314 14.79%, #2a2b3a 5.4%);
   position: absolute;
   top: -1rem;
   right: -2rem;
@@ -34,7 +34,7 @@
 }
 .left_container_bg3 {
   border-radius: 24% 66% 67% 22% / 69% 66% 13% 25%;
-  background: linear-gradient(126deg, #f9ed32 41.79%, #d9bd32 54.4%);
+  background: linear-gradient(126deg, #010314 41.79%, #2a2b3a 54.4%);
   position: absolute;
   bottom: -2rem;
   right: -2rem;
@@ -47,6 +47,7 @@
   width: 320px;
   height: 420px;
   object-fit: cover;
+  mix-blend-mode: exclusion;
 }
 @media screen and (max-width: 1150px) {
   .left_container_bg1 {

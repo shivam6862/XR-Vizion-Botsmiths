@@ -41,11 +41,16 @@
   color: #fff;
   padding: 22px 40px;
   font-size: var(--ft-450);
-
   font-weight: 500;
-
   text-transform: capitalize;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }
 .links-container > a:nth-child(2) {
   border: none;
+}
+.play > svg {
+  font-size: var(--ft-700);
 }
