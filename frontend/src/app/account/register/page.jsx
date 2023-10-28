@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import classes from "@/styles/account/register.module.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import AccountImage from "@/components/notification/AccountImage";
+import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -14,11 +15,62 @@ const Register = () => {
     error: "",
   });
   const [isTextPassword, setIsTextPassword] = useState(true);
+  const { name, email, password, error } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
+  const router = useRouter();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    if (!name || !email || !password) {
+      setValues((prev) => ({ ...prev, error: "All fields are necessary" }));
+      return;
+    }
+
+    try {
+      const resUserExists = await fetch(
+        "http://localhost:3000/api/userExists",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const { user } = await resUserExists.json();
+      console.log(user);
+
+      if (user) {
+        setValues((prev) => ({ ...prev, error: "User already exists." }));
+        return;
+      }
+
+      const res = await fetch("http://localhost:3000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      if (res.ok) {
+        router.push("/");
+      } else {
+        console.log("User registration failed.");
+      }
+    } catch (error) {
+      console.log("Error during registration: ", error);
+    }
+  };
+  console.log(error);
   return (
     <>
       <Header />
@@ -29,7 +81,7 @@ const Register = () => {
           </div>
           <div className={classes.right}>
             <div className={classes.right_container}>
-              <h1>Create your Free Account</h1>
+              <h1>Create Your Free Account</h1>
               <div className={classes.input_box}>
                 <p>full name</p>
                 <input
@@ -79,7 +131,9 @@ const Register = () => {
               </div>
             </div>
             <div className={classes.right_last}>
-              <div className={classes.button}>Create Accounts</div>
+              <div className={classes.button} onClick={handleSubmit}>
+                Create Accounts
+              </div>
               <div className={classes.privacy_policy}>
                 By creating an account, I accept the Terms & Conditions &
                 Privacy Policy

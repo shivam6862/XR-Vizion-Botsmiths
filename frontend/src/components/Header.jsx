@@ -7,7 +7,10 @@ import Backdrop from "@/components/Backdrop";
 import { useCookies } from "@/hook/useCookies";
 import ConfirmLogout from "@/components/ConfirmLogout";
 import { useNotification } from "@/hook/useNotification";
-import { useLocalStorage } from "@/hook/useLocalStorage";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import logo from "../../public/logo.jpg";
 
 const pageNavigators = [
   { title: "Features", path: "/features" },
@@ -16,11 +19,13 @@ const pageNavigators = [
   { title: "Contact", path: "/contact-us" },
 ];
 
-const Header = () => {
+const Header = (session) => {
   const { NotificationHandler } = useNotification();
+  const { data } = useSession();
+  console.log(data);
+  console.log(session);
   const router = useRouter();
-  const { removePersonalDetails } = useLocalStorage();
-  const { removeIsLoggedInCookies } = useCookies();
+
   const [isLogoutHandler, setIsLogOutHandler] = useState(false);
 
   const logOutHandler = () => {
@@ -30,9 +35,9 @@ const Header = () => {
     setIsLogOutHandler(false);
   };
   const acceptLogotHandler = () => {
+    signOut();
     setIsLogOutHandler(false);
-    removePersonalDetails();
-    removeIsLoggedInCookies();
+
     router.push(`/`);
   };
 
@@ -47,6 +52,7 @@ const Header = () => {
       )}
       <Link href={"/"}>
         <div className={classes["logo-container"]}>
+          <Image src={logo} alt="logo" />
           <h1
             onClick={() => {
               NotificationHandler(
@@ -70,8 +76,20 @@ const Header = () => {
         </ul>
       </nav>
       <nav className={classes["auth-links"]}>
-        <Link href={"/account/login"}>Sign In</Link>
-        <Link href={"/account/register"}>Sign Up</Link>
+        {session.session !== null ? (
+          <button
+            onClick={() => {
+              logOutHandler();
+            }}
+          >
+            Sign Out
+          </button>
+        ) : (
+          <>
+            <Link href={"/account/login"}>Sign In</Link>
+            <Link href={"/account/register"}>Sign Up</Link>
+          </>
+        )}
       </nav>
     </header>
   );

@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { NotificationContextProvider } from "@/store/notification/Notification-context";
 import Notifications from "@/components/notification/Notifications";
+import { AuthProvider } from "./providers";
 
 export const metadata = {
   title: "XR Vizion Botsmiths",
@@ -16,10 +17,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NotificationContextProvider>
-          {children}
-          <Notifications />
-        </NotificationContextProvider>
+        <AuthProvider>
+          <NotificationContextProvider>
+            {children}
+            <Notifications />
+          </NotificationContextProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -6,6 +6,12 @@
 }
 .logo-container {
   color: #fff;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.logo-container > img {
+  border-radius: 50%;
 }
 .page-links-container > ul {
   color: var(--Paragraph, #77798f);
@@ -19,13 +25,18 @@
   display: flex;
   gap: 1rem;
 }
-.auth-links > a {
+.auth-links > a,
+.auth-links > button {
   border-radius: 40px;
   border: 1px solid var(--stock);
   padding: 16px 40px;
   font-size: var(--ft-400);
   font-weight: 500;
   color: var(--white-color);
+}
+.auth-links > button {
+  background-color: var(--bg-primary);
+  cursor: pointer;
 }
 .auth-links > a:nth-child(2) {
   border-radius: 40px;

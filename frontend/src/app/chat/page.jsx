@@ -5,6 +5,7 @@ import Chats from "@/components/Chats";
 import Chat from "@/components/Chat";
 import classes from "@/styles/chat.module.css";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";
 import { useRouterPush } from "@/hook/useRouterPush";
@@ -16,6 +17,8 @@ export default function Page() {
   const [showChats, setShowChats] = useState(false);
   const { routerPushChange } = useRouterPush();
   const searchParams = useSearchParams();
+  const { data } = useSession();
+  console.log(data);
 
   const current = new URLSearchParams(Array.from(searchParams.entries()));
   const currentURL = current.toString().substring(9);
