@@ -16,7 +16,9 @@
   position: relative;
   overflow: scroll;
 }
-
+.chats-container > div:nth-child(1) {
+  flex: 1;
+}
 .bottom {
   position: sticky;
   bottom: 0;
@@ -59,8 +61,8 @@
   display: flex;
   gap: 1rem;
 }
-.avatar {
-}
+/* .avatar {
+} */
 .chat-left {
   color: #c9c9c9;
   line-height: 158.5%;
@@ -100,5 +102,24 @@
   }
   .main {
     flex-direction: column;
+  }
+}
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--white-color);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
   }
 }

@@ -19,9 +19,7 @@
 }
 .chats-header > h1 {
   color: #0f82ff;
-
   font-size: var(--ft-400);
-
   font-weight: 500;
   line-height: 158.5%; /* 41.079px */
   letter-spacing: 8.812px;
@@ -39,6 +37,7 @@
   color: #c9c9c9;
   max-width: 300px;
   position: relative;
+  cursor: pointer;
 }
 .actions {
   position: absolute;
@@ -65,4 +64,67 @@
   .close {
     display: block;
   }
+}
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.item > svg {
+  color: var(--white-color);
+}
+.changeName {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--paragraph);
+  border-radius: 5px;
+  z-index: 50;
+}
+.changeName > input {
+  all: unset;
+  border-radius: 6px;
+  border: 1px solid var(--paragraph);
+  cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  color: var(--paragraph);
+  background-color: var(--white-color);
+  width: 75%;
+}
+.changeNameButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: 0.25rem;
+}
+.changeNameButtons > svg {
+  color: var(--white-color);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.changeNameButtons > svg:hover {
+  scale: 1.05;
+  color: var(--primary-color);
+}
+.backdropEditName {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #282c3f;
+  opacity: 0;
+  z-index: 10;
+  display: block;
 }

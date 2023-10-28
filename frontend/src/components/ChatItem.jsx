@@ -27,7 +27,7 @@ const ChatItem = ({ data }) => {
 
   return (
     <>
-      {data.isUser == true ? (
+      {data.isUser == "true" ? (
         <>
           {data.isimage == "true" ? (
             <div className={classes.right}>

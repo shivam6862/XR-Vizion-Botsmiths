@@ -46,12 +46,15 @@
   gap: 0.5rem;
   justify-content: center;
 }
+.chats-btn > svg {
+  color: var(--white-color);
+  font-size: 1.1rem;
+}
 .list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   list-style: none;
-
   gap: 1rem;
 }
 .list > li {
@@ -62,6 +65,10 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+}
+.list > li > svg {
+  color: var(--white-color);
+  font-size: 1.1rem;
 }
 @media (width < 1200px) {
   .user-container {
