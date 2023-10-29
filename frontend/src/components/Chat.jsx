@@ -14,8 +14,6 @@ function Chat({
   id,
   chat,
   setChat,
-  initialRender,
-  setInitialRender,
   setConversationId,
   messageHistory,
   setMessageHistory,
@@ -25,13 +23,10 @@ function Chat({
   const { sendUserChat } = useSendUserChatById();
   const [file, setFile] = useState(null);
   const [audio, setAudio] = useState(null);
+
   useEffect(() => {
     const functioning = async () => {
-      if (
-        id.substr(0, 3) == "new" &&
-        chat.length == 2 &&
-        initialRender == false
-      ) {
+      if (id.substr(0, 3) == "new" && chat.length == 2) {
         var name = chat[1].text.substr(0, 25);
         if (chat[1].text.length > 25) name = name + "..";
         const newId = await create(name, chat, id.substr(3), messageHistory);
@@ -43,29 +38,6 @@ function Chat({
     };
     functioning();
   }, [id.substr(0, 3) == "new" && chat.length == 2]);
-
-  useEffect(() => {
-    const sendUserChatId = async () => {
-      if (initialRender) {
-        setInitialRender(false);
-        return;
-      }
-
-      const sendUserChat_Id = async () => {
-        if (chat.length <= 2) return;
-        const formData = new FormData();
-        formData.append("chat", chat[chat.length - 1]);
-        formData.append("messageHistory", messageHistory);
-        if (file) formData.append("file", file);
-        if (audioUrl) formData.append("audio", audio);
-        const response = await sendUserChat(id, formData);
-        console.log(response);
-      };
-      sendUserChat_Id();
-    };
-    sendUserChatId();
-  }, [chat]);
-  //
 
   const [audioUrl, setAudioUrl] = useState(null);
   const textareaRef = useRef(null);
@@ -81,24 +53,19 @@ function Chat({
       if (!navigator.mediaDevices) {
         throw new Error("Your browser does not support audio recording.");
       }
-
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
       const chunks = [];
-
       mediaRecorder.addEventListener("dataavailable", (event) => {
         chunks.push(event.data);
       });
-
       mediaRecorder.addEventListener("stop", () => {
         const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
         setAudio(blob);
         const url = URL.createObjectURL(blob);
         setAudioUrl(url);
       });
-
       mediaRecorder.start();
-
       setTimeout(() => {
         mediaRecorder.stop();
         stream.getTracks().forEach((track) => track.stop());
@@ -115,7 +82,6 @@ function Chat({
         console.error(error);
       }
     };
-
     getMediaStream();
   }, []);
 
@@ -123,7 +89,6 @@ function Chat({
   const { uploadDocument } = useBot();
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const callBot = async () => {
     if (question.trim().length == 0) return;
     setIsLoading(true);
@@ -131,15 +96,25 @@ function Chat({
       ...prev,
       { text: question, isUser: "true", isimage: "false" },
     ]);
+    const sendUserChat_Id = async () => {
+      if (chat.length < 2) return;
+      const formData = new FormData();
+      formData.append(
+        "chat",
+        JSON.stringify({ text: question, isUser: "true", isimage: "false" })
+      );
+      formData.append("messageHistory", messageHistory);
+      if (file) formData.append("file", file);
+      if (audioUrl) formData.append("audio", audio);
+      await sendUserChat(id, formData);
+    };
+    await sendUserChat_Id();
     const formData = new FormData();
     formData.append("question", question);
     formData.append("messageHistory", messageHistory);
     formData.append("conversationId", id);
-    if (file) formData.append("file", file);
-    if (audioUrl) formData.append("audio", audio);
     const response = await uploadDocument(formData);
     setQuestion("");
-    console.log(response);
     if (response?.length > 0) {
       setChat((prev) => [
         ...prev,
@@ -151,6 +126,23 @@ function Chat({
           isimage: "false",
         },
       ]);
+      const sendUserChat_Id_2 = async () => {
+        if (chat.length < 2) return;
+        const formData = new FormData();
+        formData.append(
+          "chat",
+          JSON.stringify({
+            text: response[0].text,
+            isUser: "false",
+            isimage: "false",
+            timeTaken: response[0].timeTaken,
+            queryCost: response[0].queryCost,
+          })
+        );
+        formData.append("messageHistory", messageHistory);
+        await sendUserChat(id, formData);
+      };
+      await sendUserChat_Id_2();
       setMessageHistory(response[0].messageHistory);
     }
     setIsLoading(false);

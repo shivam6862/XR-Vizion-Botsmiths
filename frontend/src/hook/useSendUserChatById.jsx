@@ -10,7 +10,7 @@ export const useSendUserChatById = () => {
       const userId = user.user.email;
       const authToken = user.user.email;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/addconversations/${conversationId}/${userId}`;
-
+      console.log(url);
       const headers = new Headers({
         Authorization: `${authToken}`,
         "Content-Type": "application/json",
@@ -18,7 +18,6 @@ export const useSendUserChatById = () => {
 
       const response = await fetch(url, {
         method: "POST",
-        headers: headers,
         body: formData,
       });
 

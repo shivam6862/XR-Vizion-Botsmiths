@@ -13,7 +13,14 @@ const useBot = () => {
       return data;
     } catch (error) {
       console.log(error);
-      const data = [{ text: "Sorry server is busy!" }];
+      const data = [
+        {
+          text: "Sorry server is busy!",
+          timeTaken: "15s",
+          queryCost: "1",
+          messageHistory: { title: "", chat_summary: "new chat begins" },
+        },
+      ];
       return data;
     }
   };

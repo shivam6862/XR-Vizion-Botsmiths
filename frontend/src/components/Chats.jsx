@@ -61,7 +61,7 @@ const Chats = ({
       );
       setPrevData(updatedChat);
       setChat([]);
-      setMessageHistory("");
+      setMessageHistory({ title: "", chat_summary: "new chat begins" });
       const newchatID = "new" + v4();
       setConversationId(newchatID);
       routerPushChange(newchatID);

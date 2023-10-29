@@ -6,7 +6,9 @@ module.exports = addMessageToConversation = async (
   userId,
   conversationId,
   isimage,
-  messageHistory
+  messageHistory,
+  timeTaken,
+  queryCost
 ) => {
   try {
     const newId = v4();
@@ -15,6 +17,8 @@ module.exports = addMessageToConversation = async (
       text: messageText,
       postedById: userId,
       isimage: isimage,
+      timeTaken,
+      queryCost,
     };
     const connection = await getDb();
     await connection.collection("conversations").updateOne(
