@@ -145,6 +145,8 @@ function Chat({
         ...prev,
         {
           text: response[0].text,
+          timeTaken: response[0].timeTaken,
+          queryCost: response[0].queryCost,
           isUser: "false",
           isimage: "false",
         },

@@ -47,7 +47,13 @@ const ChatItem = ({ data }) => {
           <div className={classes.avatar}>
             <ChatLogo dimL={"22px"} dim={12} />
           </div>
-          <div className={classes["chat-left"]}>{formattedLines}</div>
+          <div>
+            <div className={classes["chat-left"]}>{formattedLines}</div>
+            <div className={classes.extras}>
+              <p>{data.timeTaken} Secs</p>
+              <p>$ {data.queryCost}</p>
+            </div>
+          </div>
         </div>
       )}
     </>

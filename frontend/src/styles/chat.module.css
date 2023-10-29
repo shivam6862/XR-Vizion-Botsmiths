@@ -107,8 +107,9 @@
   display: flex;
   gap: 1rem;
 }
-/* .avatar {
-} */
+.left > div:nth-child(2) {
+  width: 100%;
+}
 .chat-left {
   color: #c9c9c9;
   line-height: 158.5%;
@@ -123,6 +124,20 @@
 }
 .chat-right {
   line-height: 158.5%;
+}
+.extras {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.extras > p {
+  border: 1px solid #c9c9c9;
+  color: #fff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  font-size: var(--ft-300);
 }
 
 @media (width < 850px) {
