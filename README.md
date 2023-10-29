@@ -33,6 +33,7 @@ The application provides responses in the following format:
 3. Login Page: Allows users to log into their accounts.
 4. Signup Page: Allows new users to create an account.
 5. Forgot Password Page: Helps users recover their forgotten passwords.
+6. Chat Pare : Allows new users to uplaod pdf and ask douts.
 
 ## User Authentication
 
@@ -85,6 +86,28 @@ The application implements secure user authentication using Next.js authenticati
 3. Audio Input: Click on the "Upload Audio" button, select an audio file, and click on the submit button to transcribe the audio to text and receive a response.
 
 4. User Authentication: Use the login and signup pages to create an account or log in. If you forget your password, you can reset it using the "Forgot Password" page.
+
+## Snapshot
+
+### SignIn Page
+
+![signIn Logo](./PHOTO/signIn.jpg)
+
+### Home Page
+
+![home Logo](./PHOTO/home.jpg)
+
+### Profile Page
+
+![Profile Logo](./PHOTO/Profile.jpg)
+
+### Chat Page
+
+![chat Logo](./PHOTO/chat.png)
+
+### Footer Page
+
+![Footer Logo](./PHOTO/Footer.png)
 
 ## Contribution Guidelines
 
