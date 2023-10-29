@@ -35,7 +35,10 @@
   gap: 1rem;
   background: #09274d;
 }
-.input-field-container > textarea {
+.output-input {
+  flex: 1;
+}
+.input-field-container textarea {
   width: 100%;
   padding: 0.3rem 1rem;
   background: transparent;
@@ -53,6 +56,49 @@
 }
 .input-field-container > textarea::placeholder {
   color: #c9c9c9;
+}
+.output-divs {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.selected-file {
+  max-width: 500px;
+  border: 1px solid #c9c9c9;
+  padding: 1rem;
+  border-radius: 50px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.pdf-close {
+  position: absolute;
+  right: 10px;
+  background-color: #fff;
+  color: #000;
+}
+.selected-file > span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.audio-container {
+  border-radius: 50px;
+  background-color: #fff;
+  position: relative;
+  padding-right: 30px;
+  display: flex;
+  align-items: center;
+}
+.audio-close {
+  position: absolute;
+  right: 10px;
+  background-color: #fff;
+  color: #000;
 }
 
 /* Chat Item */

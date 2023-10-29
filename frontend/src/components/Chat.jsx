@@ -7,6 +7,7 @@ import { MdKeyboardVoice, MdOutlineAttachment } from "react-icons/md";
 import usecreateConversation from "@/hook/usecreateConversation";
 import { useSendUserChatById } from "@/hook/useSendUserChatById";
 import { useRouterPush } from "@/hook/useRouterPush";
+import { AiOutlineClose } from "react-icons/ai";
 import useBot from "@/hook/useBot";
 
 function Chat({
@@ -22,6 +23,7 @@ function Chat({
   const { routerPushChange } = useRouterPush();
   const { create } = usecreateConversation();
   const { sendUserChat } = useSendUserChatById();
+  const [file, setFile] = useState(null);
   useEffect(() => {
     const functioning = async () => {
       if (
@@ -50,7 +52,12 @@ function Chat({
 
       const sendUserChat_Id = async () => {
         if (chat.length <= 2) return;
-        const response = await sendUserChat(id, chat, messageHistory);
+        const formData = new FormData();
+        formData.append("chat", chat[chat.length - 1]);
+        formData.append("messageHistory", messageHistory);
+        if (file) formData.append("file", file);
+        if (audioUrl) formData.append("audio", audioUrl);
+        const response = await sendUserChat(id, formData);
         console.log(response);
       };
       sendUserChat_Id();
@@ -151,29 +158,64 @@ function Chat({
           <label htmlFor="attach">
             <MdOutlineAttachment size={30} color="#c9c9c9" cursor={"pointer"} />
           </label>
-          <input style={{ display: "none" }} type="file" id="attach" />
-          <textarea
-            ref={textareaRef}
-            className={classes["input-field"]}
-            type="text"
-            placeholder="Type a message"
-            rows={1}
-            onInput={handleInput}
-            value={question}
+          <input
+            style={{ display: "none" }}
+            type="file"
+            id="attach"
             onChange={(e) => {
-              setQuestion(e.target.value);
-            }}
-            onKeyDown={(e) => {
-              if (e.key == "Enter") callBot();
+              setFile(e.target.files[0]);
             }}
           />
+          <div className={classes["output-input"]}>
+            <textarea
+              ref={textareaRef}
+              className={classes["input-field"]}
+              type="text"
+              placeholder="Type a message"
+              rows={1}
+              onInput={handleInput}
+              value={question}
+              onChange={(e) => {
+                setQuestion(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") callBot();
+              }}
+            />
+            <div className={classes["output-divs"]}>
+              {file && (
+                <div className={classes["selected-file"]}>
+                  <span>{file.name}</span>
+                  <AiOutlineClose
+                    cursor={"pointer"}
+                    onClick={() => {
+                      setFile(null);
+                    }}
+                    className={classes["pdf-close"]}
+                  />
+                </div>
+              )}
+              {audioUrl && (
+                <div className={classes["audio-container"]}>
+                  <audio src={audioUrl} controls />
+                  <AiOutlineClose
+                    cursor={"pointer"}
+                    onClick={() => {
+                      setAudioUrl(null);
+                    }}
+                    className={classes["audio-close"]}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
           <MdKeyboardVoice
             size={30}
             color="#c9c9c9"
             cursor={"pointer"}
             onClick={handleRecord}
           />
-          {audioUrl && <audio src={audioUrl} controls />}
+
           {isLoading ? (
             <div className={classes.spinner}></div>
           ) : (

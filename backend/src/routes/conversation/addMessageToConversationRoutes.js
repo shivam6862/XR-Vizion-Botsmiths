@@ -12,7 +12,8 @@ module.exports = addMessageToConversationRoutes = {
         userId,
         conversationId
       );
-      const { text, messageHistory } = req.body;
+      const { file } = req.files;
+      const { chat: text, messageHistory } = req.body;
 
       var id = "";
       var message = text.text;

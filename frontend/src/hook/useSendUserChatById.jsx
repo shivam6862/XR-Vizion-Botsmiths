@@ -5,7 +5,7 @@ export const useSendUserChatById = () => {
   const { NotificationHandler } = useNotification();
   const { data: user } = useSession();
 
-  const sendUserChat = async (conversationId, chat, messageHistory) => {
+  const sendUserChat = async (conversationId, formData) => {
     try {
       const userId = user.user.email;
       const authToken = user.user.email;
@@ -19,10 +19,7 @@ export const useSendUserChatById = () => {
       const response = await fetch(url, {
         method: "POST",
         headers: headers,
-        body: JSON.stringify({
-          text: chat[chat.length - 1],
-          messageHistory: messageHistory,
-        }),
+        body: formData,
       });
 
       const data = await response.json();
