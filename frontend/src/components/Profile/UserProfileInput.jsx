@@ -8,9 +8,9 @@ import { useNotification } from "@/hook/useNotification";
 const UserProfileInput = () => {
   const [file, setFile] = useState(null);
   const [values, setValues] = useState({
-    firstName: "",
-    secondName: "",
-    description: "",
+    firstName: "Shivam",
+    secondName: "Kumar",
+    description: "We enjoyed this hackthon!",
   });
   const { NotificationHandler } = useNotification();
   const { firstName, secondName, description } = values;

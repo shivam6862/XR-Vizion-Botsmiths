@@ -5,7 +5,10 @@ import { useSession } from "next-auth/react";
 export const useFetchUserChatById = (conversationId, defaultValue) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(defaultValue);
-  const [messageHistory, setMessageHistory] = useState("");
+  const [messageHistory, setMessageHistory] = useState({
+    title: "",
+    chat_summary: "new chat begins",
+  });
   const { NotificationHandler } = useNotification();
   const { data: user } = useSession();
 
@@ -45,7 +48,7 @@ export const useFetchUserChatById = (conversationId, defaultValue) => {
         console.log(err);
         NotificationHandler("Error", "Check your connection!", "Error");
         setData([]);
-        setMessageHistory("");
+        setMessageHistory({ title: "", chat_summary: "new chat begins" });
         setIsLoading(false);
       }
     };

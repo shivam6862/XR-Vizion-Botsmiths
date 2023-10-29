@@ -12,9 +12,10 @@ module.exports = addMessageToConversationRoutes = {
         userId,
         conversationId
       );
-      const { file } = req.files;
-      const { chat: text, messageHistory } = req.body;
-
+      var file = "";
+      if (req.files) file = req.files.file;
+      var { chat: text, messageHistory } = req.body;
+      text = JSON.parse(text);
       var id = "";
       var message = text.text;
       if (text.isUser == "false") id = process.env.CHATBOT_ID;
@@ -27,7 +28,9 @@ module.exports = addMessageToConversationRoutes = {
           id,
           conversationId,
           isimage,
-          messageHistory
+          messageHistory,
+          text.timeTaken,
+          text.queryCost
         );
         const updatedConversation = await getConversation(conversationId);
         res.status(200).json({
