@@ -1,12 +1,12 @@
-import { useLocalStorage } from "./useLocalStorage";
 import { useNotification } from "./useNotification";
+import { useSession } from "next-auth/react";
 
 const usecreateConversation = () => {
   const { NotificationHandler } = useNotification();
-  const { fetchPersonalDetails } = useLocalStorage();
+  const { data: user } = useSession();
 
   const create = async (name, chat, conversationId, messageHistory) => {
-    const userId = fetchPersonalDetails().data.id;
+    const userId = user.user.email;
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/conversations`,

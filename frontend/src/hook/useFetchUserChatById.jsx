@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
-import { useLocalStorage } from "./useLocalStorage";
 import { useNotification } from "./useNotification";
+import { useSession } from "next-auth/react";
 
 export const useFetchUserChatById = (conversationId, defaultValue) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(defaultValue);
   const [messageHistory, setMessageHistory] = useState("");
   const { NotificationHandler } = useNotification();
+  const { data: user } = useSession();
 
   useEffect(() => {
     const loadResources = async () => {
-      const { fetchPersonalDetails } = useLocalStorage();
-      const user = fetchPersonalDetails();
-
       if (user == null || user == undefined) {
         setData(defaultValue);
         setIsLoading(false);
@@ -25,10 +23,10 @@ export const useFetchUserChatById = (conversationId, defaultValue) => {
         return;
       }
 
-      const userId = user.data.id;
+      const userId = user.user.email;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/getconversations/${conversationId}/${userId}`;
 
-      const authToken = user.token;
+      const authToken = user.user.email;
       const headers = new Headers({
         Authorization: `${authToken}`,
         "Content-Type": "application/json",
@@ -52,7 +50,7 @@ export const useFetchUserChatById = (conversationId, defaultValue) => {
       }
     };
     loadResources();
-  }, [conversationId]);
+  }, [conversationId, user?.user]);
 
   return { isLoading, data, setData, messageHistory, setMessageHistory };
 };

@@ -10,7 +10,7 @@ module.exports = getCanUserAccessConversation = async (
       .collection("conversations")
       .findOne({ conversationId: conversationId });
 
-    if (conversation == null) return "Data not Found";
+    if (conversation == null) return "conversation_null";
     return conversation.memberIds.includes(userId);
   } catch (err) {
     console.log("get Can User Access Conversation file error:" + err.message);
