@@ -5,7 +5,7 @@ export const useSendUserChatById = () => {
   const { NotificationHandler } = useNotification();
   const { fetchPersonalDetails } = useLocalStorage();
 
-  const sendUserChat = async (conversationId, chat, messageHistory) => {
+  const sendUserChat = async (conversationId, formData) => {
     try {
       const user = fetchPersonalDetails();
       const userId = user.data.id;
@@ -20,10 +20,7 @@ export const useSendUserChatById = () => {
       const response = await fetch(url, {
         method: "POST",
         headers: headers,
-        body: JSON.stringify({
-          text: chat[chat.length - 1],
-          messageHistory: messageHistory,
-        }),
+        body: formData,
       });
 
       const data = await response.json();
