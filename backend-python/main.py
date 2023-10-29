@@ -19,27 +19,33 @@ def home():
     return jsonify(response_obj), 200, response_headers
 
 
-@app.route('/uploadDocument', methods=['GET'])
+@app.route('/uploadDocument', methods=['POST'])
 def uploadDocument():
     try:
-        # data = request.form.get('data')
+        # data = request.form.get('question')
         # conversationId = request.form.get('conversationId')
-        # history = request.form.get('history')
-        data = "what is the value of rupee in dollar?"
-        conversationId = "fdbfuidi-bfkhbdekjb-efjkbefjkb"
-        history = None
+        # history = request.form.get('messageHistory')
+        data = request.json.get('question')
+        conversationId = request.json.get('conversationId')
+        history = request.json.get('messageHistory')
+        print(data , conversationId , history)
+        # data = "what is ER model ?"
+        # conversationId = "fdbfuidi-bfkhbdekjb-efjkbefjkb"
+        # history = None
 
         if not data:
             return jsonify({"error": "Missing data or file"}), 400
         
-        predictions,history = models.model(data=data  ,conversationId=conversationId, history=history)
-
+        answer, history , time_taken, query_cost = models.model(data=data  ,conversationId=conversationId, history=history)
+        
         response_obj = [{
-            "predictions": predictions,
-            "history":history,
-            "message": "Predictions saved successfully."
-        }]
-
+                "text": answer,
+                "timeTaken": time_taken,
+                "queryCost": query_cost,
+                "messageHistory": history,
+                "message": "Predictions saved successfully."
+            }]
+        
         response_headers = {
             "Access-Control-Allow-Origin": "*"
         }
