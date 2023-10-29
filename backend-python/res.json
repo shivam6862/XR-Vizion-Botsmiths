@@ -1,0 +1,47 @@
+[
+  {
+      "text": "Retrieve all employees and their departments.",
+      "timeTaken": "50ms",
+      "queryCost": "$5.00",
+      "messageHistory": [
+          {
+              "timestamp": "2023-10-29T10:30:00",
+              "message": "Query started processing."
+          },
+          {
+              "timestamp": "2023-10-29T10:31:00",
+              "message": "Query execution completed successfully."
+          }
+      ]
+  },
+  {
+      "text": "Find products with low inventory.",
+      "timeTaken": "65ms",
+      "queryCost": "$8.50",
+      "messageHistory": [
+          {
+              "timestamp": "2023-10-29T11:15:00",
+              "message": "Query started processing."
+          },
+          {
+              "timestamp": "2023-10-29T11:16:05",
+              "message": "Query executed with warnings: Low inventory detected."
+          }
+      ]
+  },
+  {
+      "text": "Count the number of customers per region.",
+      "timeTaken": "40ms",
+      "queryCost": "$3.75",
+      "messageHistory": [
+          {
+              "timestamp": "2023-10-29T12:00:00",
+              "message": "Query started processing."
+          },
+          {
+              "timestamp": "2023-10-29T12:00:40",
+              "message": "Query execution completed successfully."
+          }
+      ]
+  }
+]

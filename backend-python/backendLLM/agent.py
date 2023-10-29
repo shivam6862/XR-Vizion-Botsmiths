@@ -9,7 +9,6 @@ from langchain.callbacks.manager import (
 )
 from langchain.schema import Document
 from langchain.utilities.google_search import GoogleSearchAPIWrapper
-from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from backendLLM.chains import *
 from backendLLM.db_creation import *
 from langchain.vectorstores import chroma
@@ -72,7 +71,7 @@ class VectorDB(BaseTool):
 
 
 search = GoogleSearchAPIWrapper()
-calculator = WolframAlphaAPIWrapper()
+# calculator = WolframAlphaAPIWrapper()
 #_______________________________________________________________________________________________________________________
 
 class PersonalAgent:
@@ -99,12 +98,12 @@ class PersonalAgent:
           VectorDB(
             name = "User Database", 
             descr = '''Use this tool to fetch answer to user queries from database. Prioritize this over web search.'''),
-          # Tool(
-          #   name="Google Search",  
-          #   description="This tool is helpful when the user mentions to search the web or for finding very recent information.", 
-          #   func=search.run,  
-          #   handle_tool_error=True,  
-          # ),
+          Tool(
+            name="Google Search",  
+            description="This tool is helpful for web search for all queries" , 
+            func=search.run,  
+            handle_tool_error=True,  
+          ),
           # Tool(
           #   name="Calculator", 
           #   description="This tool is helpful for dealing with mathematical queries/problems.", 
@@ -112,26 +111,23 @@ class PersonalAgent:
           #   handle_tool_error=True,
           # )
 ]
-
     self.task_prompt = ZeroShotAgent.create_prompt(
         self.task_tools,
         prefix=self.prefix,
         suffix=self.suffix,
         input_variables=["input", "chat_history", "agent_scratchpad"],
     )
-
+    print(self.history)
     # memory
-    self.memory = ConversationSummaryBufferMemory(llm = llm ,memory_key="chat_history", max_token_limit=150 , prompt=chat_summary_prompt,
+    self.memory = ConversationSummaryBufferMemory(llm = llm ,memory_key="chat_history" , prompt=chat_summary_prompt,
                                                   moving_summary_buffer = self.history['chat_summary'])
-
     self.llm_chain = LLMChain(llm=llm, prompt=self.task_prompt)
-    
     # agent
     self.agent = ZeroShotAgent(llm_chain=self.llm_chain, tools=self.task_tools, verbose=True)
     self.agent_chain = AgentExecutor.from_agent_and_tools(
         agent=self.agent, tools=self.task_tools,
         verbose=True, memory=self.memory, handle_parsing_errors=True,
-    )
+    ) 
 
     # caching
     self.enable_cache = enable_cache  

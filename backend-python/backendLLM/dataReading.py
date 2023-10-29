@@ -22,7 +22,7 @@ class DataReading:
     return loader.load()
 
   def __read_web_page__(self, url)-> List[Document]:
-    loader = WebBaseLoader(web_path=url ,verify_ssl=False)    # To bypass SSL verification errors during fetching, set verify_ssl=False
+    loader = WebBaseLoader(web_path=url ,verify_ssl=True)    # To bypass SSL verification errors during fetching, set verify_ssl=False
     return loader.load()
   
   def __read_docx__(self , path)-> List[Document]:
