@@ -99,18 +99,18 @@ class PersonalAgent:
           VectorDB(
             name = "User Database", 
             descr = '''Use this tool to fetch answer to user queries from database. Prioritize this over web search.'''),
-          Tool(
-            name="Google Search",  
-            description="This tool is helpful when the user mentions to search the web or for finding very recent information.", 
-            func=search.run,  
-            handle_tool_error=True,  
-          ),
-          Tool(
-            name="Calculator", 
-            description="This tool is helpful for dealing with mathematical queries/problems.", 
-            func=calculator.run, 
-            handle_tool_error=True,
-          )
+          # Tool(
+          #   name="Google Search",  
+          #   description="This tool is helpful when the user mentions to search the web or for finding very recent information.", 
+          #   func=search.run,  
+          #   handle_tool_error=True,  
+          # ),
+          # Tool(
+          #   name="Calculator", 
+          #   description="This tool is helpful for dealing with mathematical queries/problems.", 
+          #   func=calculator.run, 
+          #   handle_tool_error=True,
+          # )
 ]
 
     self.task_prompt = ZeroShotAgent.create_prompt(
