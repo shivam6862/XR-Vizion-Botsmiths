@@ -1,12 +1,11 @@
 import { useState, useEffect, useContext } from "react";
-import { useLocalStorage } from "./useLocalStorage";
 import { useNotification } from "./useNotification";
+import { useSession } from "next-auth/react";
 
 export const useFetchUserPrevChatLink = (defaultValue) => {
+  const { data: user } = useSession();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(defaultValue);
-  const { fetchPersonalDetails } = useLocalStorage();
-  const user = fetchPersonalDetails();
   const { NotificationHandler } = useNotification();
 
   useEffect(() => {
@@ -16,10 +15,10 @@ export const useFetchUserPrevChatLink = (defaultValue) => {
         setIsLoading(false);
         return;
       }
-      const uid = user.data.id;
-      const authToken = user.token;
+      const uid = user.user.email;
+      const authToken = user.user.email;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${uid}/conversations`;
-
+      console.log(url);
       const headers = new Headers({
         Authorization: `${authToken}`,
         "Content-Type": "application/json",
@@ -42,7 +41,7 @@ export const useFetchUserPrevChatLink = (defaultValue) => {
       }
     };
     loadResources();
-  }, []);
+  }, [user?.user?.email]);
 
   return { isLoading, data, setData };
 };

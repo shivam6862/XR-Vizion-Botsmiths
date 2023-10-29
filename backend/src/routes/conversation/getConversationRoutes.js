@@ -1,6 +1,5 @@
 const getCanUserAccessConversation = require("../../db/conversation/getCanUserAccessConversation");
 const getConversation = require("../../db/conversation/getConversation");
-const jwt = require("jsonwebtoken");
 
 module.exports = getConversationRoutes = {
   method: "get",
@@ -8,17 +7,15 @@ module.exports = getConversationRoutes = {
   handler: async (req, res) => {
     try {
       const { conversationId, userId } = req.params;
-
       const userIsAuthorized = await getCanUserAccessConversation(
         userId,
         conversationId
       );
-
-      if (userIsAuthorized == "Data not Found") {
+      if (userIsAuthorized == "conversation_null") {
         return res.status(404).json({
           conversation: [
             {
-              text: userIsAuthorized,
+              text: "Data not Found",
               isimage: "false",
               postedById: process.env.CHATBOT_ID,
               isUser: "false",
@@ -26,19 +23,8 @@ module.exports = getConversationRoutes = {
           ],
         });
       }
-      const decoded = jwt.verify(
-        req.headers.authorization,
-        process.env.JWT_SECRET_KEY
-      );
-
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-
-      if (
-        !userIsAuthorized ||
-        !decoded.authenticated ||
-        currentTimestamp > decoded.exp
-      ) {
-        return res.status(403).json({
+      if (userIsAuthorized == false) {
+        return res.status(404).json({
           conversation: [
             {
               text: "You are not Authorized!",

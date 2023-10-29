@@ -1,15 +1,13 @@
-import { useLocalStorage } from "./useLocalStorage";
 import { useNotification } from "./useNotification";
+import { useSession } from "next-auth/react";
 
 export const useUpdateChatName = () => {
-  const { fetchPersonalDetails } = useLocalStorage();
   const { NotificationHandler } = useNotification();
-
+  const { data: user } = useSession();
   const updateChatName = async (conversationId, name) => {
     try {
-      const user = fetchPersonalDetails();
-      const userId = user.data.id;
-      const authToken = user.token;
+      const userId = user.user.email;
+      const authToken = user.user.email;
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/updatechatname/${conversationId}/${userId}`;
 
       const headers = new Headers({
