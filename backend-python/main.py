@@ -41,7 +41,6 @@ def uploadDocument():
 
         if not question:
             return jsonify({"error": "Missing data or file"}), 400
-
         answer, history, time_taken, query_cost = models.model(
             data=question, conversationId=conversationId, history=messageHistory)
 
