@@ -102,7 +102,7 @@ const Login = () => {
                 Privacy Policy
               </div>
               <div className={classes.forgotPassord}>
-                <Link href={"/account/reset/password"}>Forgot Passord</Link>
+                <Link href={"/account/reset/password"}>Forgot Password</Link>
               </div>
             </div>
           </div>

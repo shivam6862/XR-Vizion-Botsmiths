@@ -33,6 +33,16 @@ export default function Page() {
     routerPushChange(event);
   };
 
+  // const chatDefault = [
+  //   { text: "This is test Question", isUser: "true", isimage: "false" },
+  //   {
+  //     text: "This is test Answer",
+  //     timeTaken: "120",
+  //     queryCost: "0.5",
+  //     isUser: "false",
+  //     isimage: "false",
+  //   },
+  // ];
   const {
     isLoading,
     data: chat,
@@ -74,7 +84,7 @@ export default function Page() {
             }}
           />
         </header>
-        <User />
+        <User user={data} />
         <div
           className={`${classes["chats-heading-container"]} ${
             showChats === true ? classes.active : ""

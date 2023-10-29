@@ -7,20 +7,21 @@ import { BsFillChatRightDotsFill } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { RiContactsBook2Fill } from "react-icons/ri";
 import { AiOutlineSetting } from "react-icons/ai";
+import Link from "next/link";
 
-const User = () => {
+const User = ({ user }) => {
   return (
     <div className={classes["user-container"]}>
-      <div className={classes["logo-container"]}>
+      <Link href={"/"} className={classes["logo-container"]}>
         <Image src={logo} alt="logo" />
         <h1>
           {" "}
           Bot<span>Smiths</span>
         </h1>
-      </div>
+      </Link>
       <div className={classes["user-details"]}>
         <Image src={userImage} alt="user" />
-        Aruul lin
+        {user !== null ? user?.user?.name : ""}
       </div>
       <button className={classes["chats-btn"]}>
         <BsFillChatRightDotsFill /> Chats
