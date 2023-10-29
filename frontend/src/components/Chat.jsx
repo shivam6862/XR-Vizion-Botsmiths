@@ -24,6 +24,7 @@ function Chat({
   const { create } = usecreateConversation();
   const { sendUserChat } = useSendUserChatById();
   const [file, setFile] = useState(null);
+  const [audio, setAudio] = useState(null);
   useEffect(() => {
     const functioning = async () => {
       if (
@@ -56,7 +57,7 @@ function Chat({
         formData.append("chat", chat[chat.length - 1]);
         formData.append("messageHistory", messageHistory);
         if (file) formData.append("file", file);
-        if (audioUrl) formData.append("audio", audioUrl);
+        if (audioUrl) formData.append("audio", audio);
         const response = await sendUserChat(id, formData);
         console.log(response);
       };
@@ -91,6 +92,7 @@ function Chat({
 
       mediaRecorder.addEventListener("stop", () => {
         const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+        setAudio(blob);
         const url = URL.createObjectURL(blob);
         setAudioUrl(url);
       });
@@ -129,7 +131,13 @@ function Chat({
       ...prev,
       { text: question, isUser: "true", isimage: "false" },
     ]);
-    const response = await uploadDocument(question, messageHistory);
+    const formData = new FormData();
+    formData.append("question", question);
+    formData.append("messageHistory", messageHistory);
+    formData.append("conversationId", id);
+    if (file) formData.append("file", file);
+    if (audioUrl) formData.append("audio", audio);
+    const response = await uploadDocument(formData);
     setQuestion("");
     console.log(response);
     if (response?.length > 0) {

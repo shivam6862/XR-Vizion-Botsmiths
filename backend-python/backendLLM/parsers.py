@@ -1,8 +1,7 @@
-from langchain.schema.output_parser import StrOutputParser
 from pydantic import validator
 from pydantic import BaseModel, Field
 from typing import List
-from langchain.output_parsers import RetryOutputParser, PydanticOutputParser
+from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 
 # create output parser class
@@ -36,4 +35,4 @@ chat_format_prompt = PromptTemplate(
     input_variables=["query"],
     template=chat_format_template,
 )
-retry_parser_chat = RetryOutputParser(parser=StrOutputParser(), retry_prompt=chat_format_prompt)
+# retry_parser_chat = RetryOutputParser(parser=StrOutputParser(), retry_prompt=chat_format_prompt)

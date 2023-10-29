@@ -14,7 +14,7 @@ import logo from "../../public/logo.jpg";
 const pageNavigators = [
   { title: "Features", path: "/features" },
   { title: "Chat", path: "/chat" },
-  { title: "Pricing", path: "/pricing" },
+  { title: "Profile", path: "/profile" },
   { title: "Contact", path: "/contact-us" },
 ];
 
